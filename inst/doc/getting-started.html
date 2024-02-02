@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>getting-started</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">getting-started</h1>
+
+
+
+<div id="metricminer" class="section level1">
+<h1>metricminer</h1>
+<p><code>metricminer</code> is an R package that helps you mine metrics
+on common places on the web through the power of their APIs.</p>
+<p>It also helps make the data in a format that is easily used for a
+dashboard or other purposes. It will have an associated dashboard
+template and tutorials to help you fully use the data you retrieve with
+<code>metricminer</code> (but these are still under development!)</p>
+<p>You can <a href="https://hutchdatascience.org/metricminer/">read the
+metricminer package documentation here</a>.</p>
+<div id="apps-supported" class="section level2">
+<h2>Apps supported</h2>
+<p>Currently <code>metricminer</code> supports mining data from:</p>
+<ul>
+<li><a href="https://calendly.com/">Calendly</a></li>
+<li><a href="https://github.com/">GitHub</a></li>
+<li><a href="https://analytics.google.com/analytics/academy/course/6">Google
+Analytics</a></li>
+<li><a href="https://www.google.com/forms/about/">Google Forms</a></li>
+<li><a href="https://admin.sli.do/events">Slido</a> export files stored
+on Googledrive</li>
+</ul>
+</div>
+<div id="data-format-options" class="section level2">
+<h2>Data format options</h2>
+<p><code>metricminer</code> attempts to retrieve API data for you and
+give you it to you in a format that is a tidy data.frame. this means
+metricminer has to be opinionated about what metrics it returns so it
+fits in a useful and human ready to read data frame.</p>
+<p>If you find that the data returned is not what you need you have two
+options (these options can be pursued concurrently):</p>
+<ol style="list-style-type: decimal">
+<li>You can set the <code>dataformat</code> argument to
+<code>&quot;raw&quot;</code> to see the original, unedited JSON formatted data as
+it was returned from the API. Then you can personally look for the data
+that you want and extract it.</li>
+<li>You can post a GitHub issue to explain why the metric missing from
+the data frame formatted data should be included. And if possible and
+reasonable, we can work on including that data in the next version of
+<code>metricminer</code>.</li>
+</ol>
+</div>
+<div id="how-to-install" class="section level2">
+<h2>How to install</h2>
+<p>If you want the development version (not advised) you can install
+using the <code>remotes</code> package to install from GitHub.</p>
+<pre><code>if (!(&quot;remotes&quot; %in% installed.packages())) {
+  install.packages(&quot;remotes&quot;)
+}
+remotes::install_github(&quot;fhdsl/metricminer&quot;)</code></pre>
+<pre><code>library(metricminer)</code></pre>
+</div>
+<div id="basic-usage" class="section level2">
+<h2>Basic Usage</h2>
+<p>To start, you need to <code>authorize()</code> the package to access
+your data. If you run <code>authorize()</code> you will be asked which
+app you’d like to authorize and whether you’d like to cache that auth
+information. If you already know which app you’d like to authorize, like
+<code>google</code> for example, you can run
+<code>authorize(&quot;google&quot;)</code>.</p>
+<p>Then follow the instructions on the upcoming screens and select the
+scopes you feel comfortable sharing (you generally just need read
+permissions for metricminer to be able to collect data).</p>
+<pre><code>authorize()</code></pre>
+<p>If you want to clear out authorizations and caches stored by
+<code>metricminer</code> you can run:</p>
+<pre><code>delete_creds()</code></pre>
+<div id="github" class="section level3">
+<h3>GitHub</h3>
+<p>You can retrieve metrics from a repository on GitHub doing this:</p>
+<pre><code>authorize(&quot;github&quot;)
+metrics &lt;- get_github_repo_summary(repo = &quot;fhdsl/metricminer&quot;)</code></pre>
+<pre><code>authorize(&quot;github&quot;)
+metrics &lt;- get_github_repo_timecourse(repo = &quot;fhdsl/metricminer&quot;)</code></pre>
+</div>
+<div id="calendly" class="section level3">
+<h3>Calendly</h3>
+<p>You can retrieve calendly events information using this type of
+workflow:</p>
+<pre><code>authorize(&quot;calendly&quot;)
+user &lt;- get_calendly_user()
+events &lt;- list_calendly_events(user = user$resource$uri)</code></pre>
+</div>
+<div id="google-analytics" class="section level3">
+<h3>Google Analytics</h3>
+<p>You can retrieve Google Analytics data for websites like this.</p>
+<p>First you have to retrieve your account information after you’ve
+authorized.</p>
+<pre><code>authorize(&quot;google&quot;)
+accounts &lt;- get_ga_user()</code></pre>
+<p>Then you need to retrieve the properties (aka usually the websites
+you are tracking) underneath that account.</p>
+<pre><code>properties_list &lt;- get_ga_properties(account_id = accounts$id[1])</code></pre>
+<p>Just need to shave off the <code>properties/</code> bit from this
+string.</p>
+<pre><code>property_id &lt;- gsub(&quot;properties/&quot;, &quot;&quot;, properties_list$properties$name[1])</code></pre>
+<p>Now we can collect some stats.</p>
+<p>In Google Analytics <code>metrics</code> are your basic numbers (how
+many visits to your website, etc.).</p>
+<pre><code>metrics &lt;- get_ga_stats(property_id, stats_type = &quot;metrics&quot;)</code></pre>
+<p>Whereas <code>dimensions</code> are more a list of events that have
+happened. So here’s a list of people that have logged on.</p>
+<pre><code>dimensions &lt;- get_ga_stats(property_id, stats_type = &quot;dimensions&quot;)</code></pre>
+<p>Lastly, we have a third option of collecting <code>link_clicks</code>
+and the links they have clicked. This is also known as a dimension
+according to Google analytics, but often it isn’t compatible for us to
+download link click data at the same time as other dimension data so in
+<code>metricminer</code> we collect them separately.</p>
+<pre><code>link_clicks &lt;- get_ga_stats(property_id, stats_type = &quot;link_clicks&quot;)</code></pre>
+</div>
+<div id="google-forms" class="section level3">
+<h3>Google Forms</h3>
+<p>You can retrieve Google form information and responses like this:</p>
+<pre><code>authorize(&quot;google&quot;)
+form_url &lt;- &quot;https://docs.google.com/forms/d/1Z-lMMdUyubUqIvaSXeDu1tlB7_QpNTzOk3kfzjP2Uuo/edit&quot;
+form_info &lt;- get_google_form(form_url)</code></pre>
+</div>
+<div id="slido" class="section level3">
+<h3>Slido</h3>
+<p>If you have used Slido for interactive slide sessions and collected
+that info and exported it to your googledrive you can use
+<code>metricminer</code> to collect that data as well.</p>
+<pre><code>drive_id &lt;- &quot;https://drive.google.com/drive/folders/0AJb5Zemj0AAkUk9PVA&quot;
+slido_data &lt;- get_slido_files(drive_id)</code></pre>
+</div>
+<div id="youtube" class="section level3">
+<h3>Youtube</h3>
+<p>If you have a channel and the URL is <a href="https://www.youtube.com/channel/a_bunch_of_letters_here" class="uri">https://www.youtube.com/channel/a_bunch_of_letters_here</a></p>
+<p>Then you can extract stats for the videos on that youtube channel
+using that URL.</p>
+<pre><code>authorize(&quot;google&quot;)
+youtube_stats &lt;- get_get_youtube_stats(&quot;a_bunch_of_letters_here&quot;)</code></pre>
+</div>
+</div>
+<div id="bulk-retrievals" class="section level2">
+<h2>Bulk Retrievals</h2>
+<p>Maybe you just want to retrieval it ALL. We have som wrapper
+functions that will attempt to do this for you. These functions are a
+bit more precarious/risky in that there may be reasons certain
+websites/repos/events/data may not be able to be collected. So
+collecting repositories one by one will allow you more insight into what
+is happening.</p>
+<p>However, these bulk retrieval functions may help you if you want to
+grab ALL of your accounts data in one swoop. Just make sure to carefully
+look over and curate that data after it is attempted to be collected.
+You may find some retrievals are empty for potentially good reasons (for
+example if a google form has no responses to collect it will show up
+with “no responses” in the respective part of the list).</p>
+<div id="github-bulk" class="section level3">
+<h3>GitHub bulk</h3>
+<p>From GitHub you can attempt to collect repository metrics from all
+repositories from an account.</p>
+<pre><code>authorize(&quot;github&quot;)
+all_repos_metrics &lt;- get_multiple_repos_metrics(owner = &quot;fhdsl&quot;)</code></pre>
+<p>If you want to do this by giving a list of specific repositories you
+want data from you can just provide a vector of those repository’s names
+like this:</p>
+<pre><code>repo_names &lt;- c(&quot;fhdsl/metricminer&quot;, &quot;jhudsl/OTTR_Template&quot;)
+some_repos_metrics &lt;- get_multiple_repos_metrics(repo_names = repo_names)</code></pre>
+</div>
+<div id="google-analytics-bulk" class="section level3">
+<h3>Google Analytics bulk</h3>
+<p>Similar to single website retrieval we need to authorize the
+package.</p>
+<pre><code>authorize(&quot;google&quot;)
+accounts &lt;- get_ga_user()</code></pre>
+<p>Then we can provide the account id to <code>all_ga_metrics</code> and
+it will attempt to grab all stats for all website properties underneath
+the provided account.</p>
+<pre><code>stats_list &lt;- all_ga_metrics(account_id = accounts$id[5])</code></pre>
+</div>
+<div id="google-forms-bulk" class="section level3">
+<h3>Google Forms bulk</h3>
+<p>As always, we need to authorize the app.</p>
+<pre><code>authorize(&quot;google&quot;)</code></pre>
+<p>We can retrieve a list of form ids using <code>googledrive</code> R
+package.</p>
+<pre><code>form_list &lt;- googledrive::drive_find(
+  shared_drive = googledrive::as_id(&quot;0AJb5Zemj0AAkUk9PVA&quot;),
+  type = &quot;form&quot;)</code></pre>
+<p>Now we can provide this vector of form ids to
+<code>get_multiple_forms</code></p>
+<pre><code>multiple_forms &lt;- get_multiple_forms(form_ids = form_list$id)</code></pre>
+</div>
+</div>
+<div id="non-interactive-authorizing-from-secrets" class="section level2">
+<h2>Non-interactive authorizing from secrets</h2>
+<p>If you’d like to authorize non-interactively (whether on GitHub
+actions or locally) you can set your tokens using
+<code>Sys.setenv()</code></p>
+<div id="setting-calendly-auth-from-secret" class="section level3">
+<h3>Setting Calendly auth from secret</h3>
+<p>You can <a href="https://calendly.com/integrations/api_webhooks">go
+here to get an API key</a>. You likely will have to login first.</p>
+<p>Then you can store this by putting your API key in this type of
+command:</p>
+<pre><code>Sys.setenv(METRICMINER_CALENDLY = &quot;Put calendly token here&quot;)</code></pre>
+<p>Now in your script if you run the following, you will have
+authorization to Calendly.</p>
+<pre><code>auth_from_secret(&quot;calendly&quot;, token = Sys.getenv(&quot;METRICMINER_CALENDLY&quot;))</code></pre>
+</div>
+<div id="setting-github-auth-from-secret" class="section level3">
+<h3>Setting GitHub auth from secret</h3>
+<p>Similar steps can be done for the GitHub personal access token.</p>
+<p>First <a href="https://github.com/settings/tokens/new?description=metricminer&amp;scopes=repo,read:packages,read:org">go
+here to get a GitHub PAT</a>. You will likely have to login first.</p>
+<p>Then you can run this command but put your GitHub PAT there.</p>
+<pre><code>Sys.setenv(METRICMINER_GITHUB_PAT = &quot;Put GitHub PAT here&quot;)</code></pre>
+<p>Now in your script if you run the following, you will have
+authorization to GitHub.</p>
+<pre><code># Authorize GitHub
+auth_from_secret(&quot;github&quot;, token = Sys.getenv(&quot;METRICMINER_GITHUB_PAT&quot;))</code></pre>
+</div>
+<div id="setting-google-auth-from-secret" class="section level3">
+<h3>Setting Google auth from secret</h3>
+<p>For Google you can authorize from secret by doing the normal
+interactive way using <code>authorize(&quot;google&quot;)</code> but storing the
+result like this:</p>
+<pre><code>token &lt;- authorize(&quot;google&quot;)</code></pre>
+<p>Then you can use this object to extract two secrets by printing them
+out like this:</p>
+<p><code>token$credentials$access_token</code>
+<code>token$credentials$refresh_token</code></p>
+<p>Then you can set these in your environment doing the same steps as
+before:</p>
+<pre><code>Sys.setenv(METRICMINER_GOOGLE_ACCESS = &quot;Google access token here&quot;)
+
+Sys.setenv(METRICMINER_GOOGLE_REFRESH = &quot;Google refresh token here&quot;)</code></pre>
+<p>Now in your script if you run the following you will have
+authorization to Google Apps.</p>
+<pre><code># Authorize Google
+auth_from_secret(&quot;google&quot;,
+                 refresh_token = Sys.getenv(&quot;METRICMINER_GOOGLE_REFRESH&quot;),
+                 access_token = Sys.getenv(&quot;METRICMINER_GOOGLE_ACCESS&quot;),
+                 cache = TRUE
+)</code></pre>
+</div>
+</div>
+<div id="authorizing-on-github-actions" class="section level2">
+<h2>Authorizing on GitHub Actions</h2>
+<p>In GitHub you can run <code>metricminer</code> using authorization if
+you use the above steps to retrieve the necessary keys but then store
+them each as GitHub Secrets.</p>
+<p><a href="https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository">Read
+here about how to store GitHub secrets</a></p>
+<p>You’ll need the secrets to be stored as the respective key name we’ve
+referenced above:</p>
+<pre><code>METRICMINER_CALENDLY
+METRICMINER_GITHUB_PAT
+METRICMINER_GOOGLE_REFRESH
+METRICMINER_GOOGLE_ACCESS</code></pre>
+<p>Then in your GitHub action yaml you’ll need something like this to
+extract and authorize these secrets in the environment.</p>
+<pre><code>      - name: Authorize metricminer
+        env:
+          METRICMINER_CALENDLY: ${{ secrets.METRICMINER_CALENDLY }}
+          METRICMINER_GITHUB_PAT: ${{ secrets.METRICMINER_GITHUB_PAT }}
+          METRICMINER_GOOGLE_ACCESS: ${{ secrets.METRICMINER_GOOGLE_ACCESS }}
+          METRICMINER_GOOGLE_REFRESH: ${{ secrets.METRICMINER_GOOGLE_REFRESH }}
+        run: |
+          # Authorize Calendly
+          auth_from_secret(&quot;calendly&quot;, token = Sys.getenv(&quot;METRICMINER_CALENDLY&quot;))
+
+          # Authorize GitHub
+          auth_from_secret(&quot;github&quot;, token = Sys.getenv(&quot;METRICMINER_GITHUB_PAT&quot;))
+
+          # Authorize Google
+          auth_from_secret(&quot;google&quot;,
+                 refresh_token = Sys.getenv(&quot;METRICMINER_GOOGLE_REFRESH&quot;),
+                 access_token = Sys.getenv(&quot;METRICMINER_GOOGLE_ACCESS&quot;),
+                 cache = TRUE
+          )
+
+          ### Now run the R commands you want here or call an R script in a later step.
+        shell: Rscript {0}
+</code></pre>
+<div id="session-info" class="section level3">
+<h3>Session info</h3>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="co">#&gt; R version 4.3.1 (2023-06-16)</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="co">#&gt; Platform: x86_64-apple-darwin20 (64-bit)</span></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a><span class="co">#&gt; Running under: macOS Ventura 13.5.2</span></span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a><span class="co">#&gt; Matrix products: default</span></span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib </span></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0</span></span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a><span class="co">#&gt; locale:</span></span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="co">#&gt; [1] C/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a><span class="co">#&gt; time zone: America/New_York</span></span>
+<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a><span class="co">#&gt; tzcode source: internal</span></span>
+<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a><span class="co">#&gt; attached base packages:</span></span>
+<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb33-19"><a href="#cb33-19" tabindex="-1"></a><span class="co">#&gt; other attached packages:</span></span>
+<span id="cb33-20"><a href="#cb33-20" tabindex="-1"></a><span class="co">#&gt; [1] metricminer_0.5.1</span></span>
+<span id="cb33-21"><a href="#cb33-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span id="cb33-23"><a href="#cb33-23" tabindex="-1"></a><span class="co">#&gt;  [1] jsonlite_1.8.8      dplyr_1.1.4         compiler_4.3.1     </span></span>
+<span id="cb33-24"><a href="#cb33-24" tabindex="-1"></a><span class="co">#&gt;  [4] tidyselect_1.2.0    stringr_1.5.1       assertthat_0.2.1   </span></span>
+<span id="cb33-25"><a href="#cb33-25" tabindex="-1"></a><span class="co">#&gt;  [7] snakecase_0.11.1    tidyr_1.3.0         jquerylib_0.1.4    </span></span>
+<span id="cb33-26"><a href="#cb33-26" tabindex="-1"></a><span class="co">#&gt; [10] yaml_2.3.8          fastmap_1.1.1       R6_2.5.1           </span></span>
+<span id="cb33-27"><a href="#cb33-27" tabindex="-1"></a><span class="co">#&gt; [13] generics_0.1.3      knitr_1.45          tibble_3.2.1       </span></span>
+<span id="cb33-28"><a href="#cb33-28" tabindex="-1"></a><span class="co">#&gt; [16] janitor_2.2.0       lubridate_1.9.3     bslib_0.6.1        </span></span>
+<span id="cb33-29"><a href="#cb33-29" tabindex="-1"></a><span class="co">#&gt; [19] pillar_1.9.0        rlang_1.1.3         utf8_1.2.4         </span></span>
+<span id="cb33-30"><a href="#cb33-30" tabindex="-1"></a><span class="co">#&gt; [22] stringi_1.8.3       cachem_1.0.8        xfun_0.41          </span></span>
+<span id="cb33-31"><a href="#cb33-31" tabindex="-1"></a><span class="co">#&gt; [25] fs_1.6.3            sass_0.4.8          timechange_0.3.0   </span></span>
+<span id="cb33-32"><a href="#cb33-32" tabindex="-1"></a><span class="co">#&gt; [28] cli_3.6.2           magrittr_2.0.3      digest_0.6.33      </span></span>
+<span id="cb33-33"><a href="#cb33-33" tabindex="-1"></a><span class="co">#&gt; [31] gh_1.4.0            googlesheets4_1.1.1 rstudioapi_0.15.0  </span></span>
+<span id="cb33-34"><a href="#cb33-34" tabindex="-1"></a><span class="co">#&gt; [34] lifecycle_1.0.4     vctrs_0.6.5         evaluate_0.23      </span></span>
+<span id="cb33-35"><a href="#cb33-35" tabindex="-1"></a><span class="co">#&gt; [37] gargle_1.5.2        glue_1.7.0          cellranger_1.1.0   </span></span>
+<span id="cb33-36"><a href="#cb33-36" tabindex="-1"></a><span class="co">#&gt; [40] googledrive_2.1.1   fansi_1.0.6         rmarkdown_2.25     </span></span>
+<span id="cb33-37"><a href="#cb33-37" tabindex="-1"></a><span class="co">#&gt; [43] purrr_1.0.2         httr_1.4.7          tools_4.3.1        </span></span>
+<span id="cb33-38"><a href="#cb33-38" tabindex="-1"></a><span class="co">#&gt; [46] pkgconfig_2.0.3     htmltools_0.5.7</span></span></code></pre></div>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

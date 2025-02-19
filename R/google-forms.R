@@ -1,7 +1,9 @@
 # Extracting data from Google Forms
 
 #' Get Google Forms
-#' @description This is a function to get the Calendly API user info
+#' @description This is a function to get the Google Forms API requests.
+#' The scopes it uses are the `See all your Google Forms forms.` and `See all responses to your Google Forms forms.`
+#' If you don't check this box on the OAuth screen this function won't work.
 #' @param url The endpoint URL for the request
 #' @param token credentials for access to Google using OAuth. `authorize("google")`
 #' @param body_params The body parameters for the request
@@ -56,7 +58,9 @@ request_google_forms <- function(token, url,
 
 
 #' Get Google Forms
-#' @description This is a function to get Google Form info and responses from the API
+#' @description This is a function to get Google Form info and responses from the API.
+#' The scopes it uses are the `See all your Google Forms forms.` and `See all responses to your Google Forms forms.`
+#' If you don't check this box on the OAuth screen this function won't work.
 #' @param form_id The form ID we need to get
 #' @param token credentials for access to Google using OAuth. `authorize("google")`
 #' @param dataformat What format would you like the data? Options are "raw" or "dataframe". "dataframe" is the default.
@@ -119,15 +123,19 @@ get_google_form <- function(form_id, token = NULL, dataformat = "dataframe") {
       metadata = metadata,
       answers = answers_df
     )
-    return(result)
   }
+  return(result)
 }
 
 
 #' Get multiple Google forms
-#' @description This is a wrapper function for returning google form info and responses for multiple forms at once
+#' @description This is a wrapper function for returning google form info and
+#' responses for multiple forms at once. The scopes it uses are the `See all your Google Forms forms.`
+#' and `See all responses to your Google Forms forms.`
+#' If you don't check this box on the OAuth screen this function won't work.
 #' @param form_ids a vector of form ids you'd like to retrieve information for
 #' @param token credentials for access to Google using OAuth. `authorize("google")`
+#' @param dataformat What format would you like the data? Options are "raw" or "dataframe". "dataframe" is the default.
 #' @returns This returns a list of API information for google forms
 #' @importFrom purrr map
 #' @importFrom janitor make_clean_names
@@ -142,29 +150,31 @@ get_google_form <- function(form_id, token = NULL, dataformat = "dataframe") {
 #'
 #' multiple_forms <- get_multiple_forms(form_ids = form_list$id)
 #' }
-get_multiple_forms <- function(form_ids = NULL, token = NULL) {
+get_multiple_forms <- function(form_ids = NULL, token = NULL, dataformat = "dataframe") {
   # Get all the forms info
   all_form_info <- sapply(form_ids, function(form_id) {
     get_google_form(
       form_id = form_id,
-      token = token
+      token = token,
+      dataformat = dataformat
     )
   }, simplify = FALSE, USE.NAMES = TRUE)
 
+  if (dataformat == "dataframe") {
+    # Set up the names
+    titles <- purrr::map(all_form_info, ~ .x$title)
+    titles <- janitor::make_clean_names(titles)
 
-  # Set up the names
-  titles <- purrr::map(all_form_info, ~ .x$title)
-  titles <- janitor::make_clean_names(titles)
-
-  # Set as names
-  names(all_form_info) <- titles
+    # Set as names
+    names(all_form_info) <- titles
+    }
 
   all_form_info
 }
 
 #' Google Form handling functions
 #' @description This is a function to get metadata about a Google Form. It is
-#'  used by the `get_google_form()` function if dataformat = "dataframe"
+#'  used by the `get_google_form()` function if dataformat = "dataframe".
 #' @param form_info The return form_info list that is extracted in `get_google_form()`
 #' @returns This returns metadata from a google form
 #' @export
@@ -231,7 +241,7 @@ extract_answers <- function(form_info) {
 
     # Put it all in a data.frame we will keep
     info_df <- data.frame(
-      reponse_id = rep(form_info$response_info$result$responses$responseId, length(questions)),
+      response_id = rep(form_info$response_info$result$responses$responseId, length(questions)),
       answers_df
     )
   } else {

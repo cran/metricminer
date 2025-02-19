@@ -36,26 +36,32 @@ write_to_gsheet(
 The googlesheet URL where the data has been written
 }
 \description{
-This is a function to write metricminer data to a Googlesheet
+This is a function to write metricminer data to a Googlesheet.
+Scope used for this function is the `See, edit, create, and delete only the specific Google Drive files you use with this app.`
+When you get to the OAuth consent screen. If you do not check this box, this function won't work.
 }
 \examples{
 \dontrun{
 
 authorize("github")
 repo_list <- get_user_repo_list(owner = "metricminer")
-gsheet <- paste0("https://docs.google.com/spreadsheets/d/",
-                 "166MV4_1pfATB3Hes2HbdZCpkMc8JTT3u3eJes6Wu7Rk/edit#gid=0")
+gsheet <- paste0(
+  "https://docs.google.com/spreadsheets/d/",
+  "166MV4_1pfATB3Hes2HbdZCpkMc8JTT3u3eJes6Wu7Rk/edit#gid=0"
+)
 write_to_gsheet(repo_list)
 
 datasheet <- write_to_gsheet(
   gsheet = gsheet,
   input = repo_list, append_rows = TRUE,
-  sheet = 1)
+  sheet = 1
+)
 
 datasheet <- write_to_gsheet(
   gsheet = gsheet,
   input = repo_list,
-  new_sheet = "github_data")
+  new_sheet = "github_data"
+)
 }
 
 }

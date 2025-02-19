@@ -5,7 +5,7 @@ Digging up data that matters, making it dashboard-ready.
 `metricminer` is an R package that helps you mine metrics from common places on the web through the power of their APIs.
 
 It also helps format the data so that it can easily be used for a dashboard or other purposes.
-It will have an associated [dashboard template](https://github.com/FredHutch/metricminer-dashboard) and tutorials to help you fully utilize the data you retrieve with `metricminer`  (but these are still under development!)
+It will have an associated [dashboard template](https://github.com/fhdsl/metricminer-dashboard) and tutorials to help you fully utilize the data you retrieve with `metricminer`  (but these are still under development!)
 
 - You can [read the metricminer package documentation here](https://hutchdatascience.org/metricminer/).
 - Additionally, you can read more about metric collection in our [associated manuscript, which is currently a preprint](https://arxiv.org/abs/2306.03255).
@@ -16,7 +16,7 @@ Currently `metricminer` supports mining data from:
 
 - [Calendly](https://calendly.com/)
 - [GitHub](https://github.com/)
-- [Google Analytics](https://analytics.google.com/analytics/academy/course/6)
+- [Google Analytics](https://developers.google.com/analytics)
 - [Google Forms](https://www.google.com/forms/about/)
 - [Youtube](https://www.youtube.com/)
 - [Slido](https://admin.sli.do/events) export files stored on Googledrive
@@ -156,17 +156,18 @@ form_info <- get_google_form(form_url)
 If you have used Slido for interactive slide sessions and collected that info and exported it to your Google Drive, you can use `metricminer` to collect that data as well.
 
 ```
-drive_id <- "https://drive.google.com/drive/folders/0AJb5Zemj0AAkUk9PVA"
-slido_data <- get_slido_files(drive_id)
+drive_folder_id <- "1FvGsZ5M8E6o17K5pI6HNGM-F1xwS9ML1"
+slido_data <- get_slido_files(drive_folder_id)
 ```
 ### YouTube
 
-If you have a YouTube channel and the URL is https://www.youtube.com/channel/a_bunch_of_letters_here
+If you have a YouTube channel and the URL is https://www.youtube.com/watch?v=oMVVeZjHJ48
 
 Then you can extract stats for the videos on that YouTube channel using that URL.
 ```
 authorize("google")
-youtube_stats <- get_youtube_stats("a_bunch_of_letters_here")
+youtube_video_stats <- get_youtube_video_stats("oMVVeZjHJ48")
+youtube_playlist_stats <- get_youtube_playlist_stats("PL9bqxQvtZgAMblZJhg7e0_ThDD-pN4UqA")
 ```
 
 ## Bulk Retrievals
@@ -182,13 +183,18 @@ From GitHub you can attempt to collect repository metrics from all repositories 
 
 ```
 authorize("github")
-all_repos_metrics <- get_multiple_repos_metrics(owner = "fhdsl")
 ```
 
 If you want to do this by giving a list of specific repositories you want data from you can just provide a vector of those repository's names like this:
 ```
 repo_names <- c("fhdsl/metricminer", "jhudsl/OTTR_Template")
-some_repos_metrics <- get_mulitple_repos_metrics(repo_names = repo_names)
+some_repos_metrics <- get_multiple_repos_metrics(repo_names = repo_names)
+```
+
+If you want the time course related data, you can set `time_course = TRUE`.
+
+```
+some_repos_metrics <- get_multiple_repos_metrics(repo_names = repo_names, time_course = TRUE)
 ```
 
 ### Google Analytics bulk

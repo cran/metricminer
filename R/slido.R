@@ -2,7 +2,10 @@
 
 
 #' Get Slido Files
-#' @description This is a function to get slido response output files. The slido files must be saved as googlesheets and cannot be xlsx.
+#' @description This is a function to get slido response output files.
+#' The slido files must be saved as googlesheets and cannot be xlsx.
+#' The scope it uses is the `See, edit, create, and delete all your Google Sheets spreadsheets.`
+#' If you don't check this box on the OAuth screen this function won't work.
 #' @param drive_id a URL or drive id that has the slido response output files you are looking to get (will recursively search for files by default).
 #' @param token credentials for access to Google using OAuth. `authorize("google")`
 #' @param recursive Should slido files be looked for recursively in this folder? default is TRUE.
@@ -46,6 +49,7 @@ get_slido_files <- function(drive_id, token = NULL, recursive = TRUE, keep_dupli
     "^Polls-overall-",
     "^Replies-",
     "^Polls-per-user-",
+    "^Polls-per-participant-",
     "^Questions-"
   )
 
@@ -60,6 +64,7 @@ get_slido_files <- function(drive_id, token = NULL, recursive = TRUE, keep_dupli
   event_names_regex <- paste0(slido_event_name, collapse = "|")
   slido_type <- stringr::word(slido_file_names, sep = event_names_regex, start = 1)
   slido_type <- gsub("-$", "", slido_type)
+  slido_type <- gsub("Polls-per-user", "Polls-per-participant", slido_type)
 
   # Set up data frame
   slido_files <- file_info %>%
@@ -81,7 +86,14 @@ get_slido_files <- function(drive_id, token = NULL, recursive = TRUE, keep_dupli
       dplyr::filter(slido_type == slido_type_name)
 
     if (length(files) > 0) {
-      slido_data <- lapply(files$id, googlesheets4::read_sheet)
+      slido_data <- lapply(files$id, function(file) {
+        headers <- googlesheets4::read_sheet(file, n_max = 1)
+
+        if (length(colnames(headers)) > 1) {
+          return(googlesheets4::read_sheet(file, col_names = colnames(headers), skip = 2))
+        }
+      })
+
 
       names(slido_data) <- files$slido_event_name
 

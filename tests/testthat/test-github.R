@@ -3,7 +3,7 @@ if (Sys.getenv("METRICMINER_GITHUB_PAT") != "") {
     # Authorize GitHub
     auth_from_secret("github",
       token = Sys.getenv("METRICMINER_GITHUB_PAT"),
-      in_test = TRUE
+      in_test = FALSE
     )
 
     repo_list <- get_org_repo_list(owner = "fhdsl")
@@ -13,6 +13,7 @@ if (Sys.getenv("METRICMINER_GITHUB_PAT") != "") {
     repo_list <- get_user_repo_list(owner = "cansavvy")
 
     expect_named(repo_list, c("name", "url", "open_issues", "visibility", "stargazers_count", "watchers_count"))
+    delete_creds()
   })
 
 
@@ -20,14 +21,14 @@ if (Sys.getenv("METRICMINER_GITHUB_PAT") != "") {
     # Authorize GitHub
     auth_from_secret("github",
       token = Sys.getenv("METRICMINER_GITHUB_PAT"),
-      in_test = TRUE
+      in_test = FALSE
     )
 
     metrics <- get_github_repo_summary(repo = "fhdsl/metricminer")
 
     expect_named(metrics, c(
-      "repo_name", "num_forks", "num_contributors", "total_contributions",
-      "num_stars", "health_percentage"
+      'num_repo_activities', 'num_stars', 'num_forks', 'num_contributors',
+      'total_contributors', 'health_percentage'
     ))
 
     time_course_metrics <- get_github_repo_timecourse(repo = "fhdsl/metricminer")
@@ -37,8 +38,8 @@ if (Sys.getenv("METRICMINER_GITHUB_PAT") != "") {
     some_repos_metrics <- get_multiple_repos_metrics(repo_names = repo_names)
 
     expect_named(some_repos_metrics, c(
-      "repo_name", "num_forks", "num_contributors", "total_contributions",
-      "num_stars", "health_percentage"
+      'num_repo_activities', 'num_stars', 'num_forks', 'num_contributors',
+      'total_contributors', 'health_percentage'
     ))
   })
 } else {
